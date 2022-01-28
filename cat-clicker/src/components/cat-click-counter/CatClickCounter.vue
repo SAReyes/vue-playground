@@ -1,7 +1,10 @@
 <template>
   <div class="cat-click-counter">
     <cat :cat="cat" @click="onCatClick" />
-    <counter :counter="catClickCounter" />
+    <div>
+      <h1>{{ cat.name }}</h1>
+      <counter :counter="catClickCounter" />
+    </div>
   </div>
 </template>
 
@@ -61,5 +64,8 @@ export default defineComponent({
 .cat-click-counter {
   display: flex;
   gap: rem(16);
+
+  color: #2c3e50;
+  font-size: rem(36);
 }
 </style>
