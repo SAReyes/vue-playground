@@ -1,6 +1,6 @@
 import { render } from "@testing-library/vue";
 import "@testing-library/jest-dom";
-import Cat from "@/components/Cat.vue";
+import Cat from "@/components/cat/Cat.vue";
 
 describe("Cat component", () => {
   it("should render an image with its proper alt", () => {

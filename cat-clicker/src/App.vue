@@ -1,14 +1,16 @@
 <template>
   <cat :cat="aCat" />
+  <counter counter="10" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Cat from "@/components/Cat.vue";
+import Cat from "@/components/cat/Cat.vue";
+import Counter from "@/components/counter/Counter.vue";
 
 export default defineComponent({
   name: "App",
-  components: { Cat },
+  components: { Counter, Cat },
   setup() {
     return {
       aCat: {
@@ -38,5 +40,6 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
+  gap: rem(16);
 }
 </style>
