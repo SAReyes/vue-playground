@@ -1,30 +1,46 @@
 <template>
   <progress v-if="loading" />
-  <div v-show="!loading" class="app">
-    <cat-click-counter @load="isFirstCatLoading = false" />
-    <cat-click-counter @load="isSecondCatLoading = false" />
-  </div>
+  <template v-else>
+    <breeds :breeds="breeds" @click="onSelectBreed" />
+    <cat-click-counter :breed-id="selectedBreed.id" />
+  </template>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
+import axios from "axios";
+import Breeds, { Breed } from "@/components/breeds/Breeds.vue";
 import CatClickCounter from "@/components/cat-click-counter/CatClickCounter.vue";
 
 export default defineComponent({
   name: "App",
-  components: { CatClickCounter },
+  components: { CatClickCounter, Breeds },
   setup() {
-    const isFirstCatLoading = ref(true);
-    const isSecondCatLoading = ref(true);
+    const loading = ref(true);
+    const selectedBreed = ref<Breed>({
+      id: "",
+      name: "",
+    });
+    const breeds = ref<Breed[]>([]);
 
-    const loading = computed(
-      () => isFirstCatLoading.value && isSecondCatLoading
-    );
+    axios
+      .get("https://api.thecatapi.com/v1/breeds", {
+        params: {
+          limit: 10,
+        },
+      })
+      .then(({ data }) => {
+        breeds.value = data.map((b: Breed) => ({ name: b.name, id: b.id }));
+        loading.value = false;
+      });
+
+    const onSelectBreed = (breed: Breed) => (selectedBreed.value = breed);
 
     return {
       loading,
-      isFirstCatLoading,
-      isSecondCatLoading,
+      breeds,
+      selectedBreed,
+      onSelectBreed,
     };
   },
 });
@@ -50,10 +66,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: $font-size;
+  color: #2c3e50;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100%;
 }
 </style>
