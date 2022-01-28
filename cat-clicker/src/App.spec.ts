@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/vue";
+import { render } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 import axios from "axios";
 import App from "@/App.vue";
@@ -12,8 +12,8 @@ describe("App", () => {
     mockedAxios.get.mockResolvedValue({
       data: [
         {
-          url: "https://example.org",
-          breeds: [{ name: " foo" }],
+          id: "1",
+          name: " foo",
         },
       ],
     });
@@ -23,17 +23,17 @@ describe("App", () => {
     mockedAxios.get.mockClear();
   });
 
-  it("renders progress when waiting for the API", () => {
+  it("should render a progress tag when waiting for the API", () => {
     const { getAllByRole } = render(App);
 
     expect(getAllByRole("progressbar")).toHaveLength(1);
   });
 
-  it("should render two images", async () => {
-    const { getAllByRole } = render(App);
+  it("should a button with the retrieved breed", async () => {
+    const { getByRole } = render(App);
 
     await flushPromises();
 
-    expect(getAllByRole("img")).toHaveLength(2);
+    expect(getByRole("button", { name: "foo" })).toBeInTheDocument();
   });
 });

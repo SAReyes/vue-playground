@@ -65,7 +65,6 @@ export default defineComponent({
   display: flex;
   gap: rem(16);
 
-  color: #2c3e50;
   font-size: rem(36);
 }
 </style>

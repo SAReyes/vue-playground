@@ -6,7 +6,20 @@ describe("Breeds component", () => {
   it("should render one button per breed", () => {
     const { getByRole } = render(Breeds, {
       props: {
-        breeds: ["foo", "bar", "baz"],
+        breeds: [
+          {
+            id: "1",
+            name: "foo",
+          },
+          {
+            id: "2",
+            name: "bar",
+          },
+          {
+            id: "3",
+            name: "baz",
+          },
+        ],
       },
     });
 
@@ -18,7 +31,12 @@ describe("Breeds component", () => {
   it("should emit a click", async () => {
     const { getByRole, emitted } = render(Breeds, {
       props: {
-        breeds: ["foo"],
+        breeds: [
+          {
+            id: "1",
+            name: "foo",
+          },
+        ],
       },
     });
 
@@ -26,6 +44,6 @@ describe("Breeds component", () => {
 
     expect(emitted().click).toBeTruthy();
     expect(emitted().click).toHaveLength(1);
-    expect(emitted().click[0]).toEqual(["foo"]);
+    expect(emitted().click[0]).toEqual([{ id: "1", name: "foo" }]);
   });
 });
