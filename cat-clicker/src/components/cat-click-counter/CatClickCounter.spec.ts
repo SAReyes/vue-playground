@@ -7,7 +7,7 @@ import CatClickCounter from "@/components/cat-click-counter/CatClickCounter.vue"
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-describe("CatClickCounter", () => {
+describe("CatClickCounter component", () => {
   beforeEach(() => {
     mockedAxios.get.mockResolvedValue({
       data: [
@@ -23,16 +23,38 @@ describe("CatClickCounter", () => {
     mockedAxios.get.mockClear();
   });
 
-  it("should emit a load event", async () => {
-    const { emitted } = render(CatClickCounter);
+  it("should render a click message when the breed id is empty", async () => {
+    const { getByText } = render(CatClickCounter, {
+      props: {
+        breedId: "",
+      },
+    });
+
+    expect(getByText("Click a cat!")).toBeInTheDocument();
+  });
+
+  it("should render a progressbar when updating the breed id", async () => {
+    const { getAllByRole, rerender } = render(CatClickCounter, {
+      props: {
+        breedId: "",
+      },
+    });
+
+    await rerender({ breedId: "foo" });
+
+    expect(getAllByRole("progressbar")).toHaveLength(1);
+  });
+
+  it("should render a image when updating the breed id and awaiting the promise", async () => {
+    const { getAllByRole, rerender } = render(CatClickCounter, {
+      props: {
+        breedId: "",
+      },
+    });
 
     await flushPromises();
 
-    expect(emitted().load).toHaveLength(1);
-  });
-
-  it("should render an image", async () => {
-    const { getAllByRole } = render(CatClickCounter);
+    await rerender({ breedId: "foo" });
 
     await flushPromises();
 
@@ -40,7 +62,13 @@ describe("CatClickCounter", () => {
   });
 
   it("should render the initial counter state", async () => {
-    const { getByText } = render(CatClickCounter);
+    const { getByText, rerender } = render(CatClickCounter, {
+      props: {
+        breedId: "",
+      },
+    });
+
+    await rerender({ breedId: "foo" });
 
     await flushPromises();
 
@@ -48,7 +76,13 @@ describe("CatClickCounter", () => {
   });
 
   it("should increase the counter when clicking the image", async () => {
-    const { getByRole, getByText } = render(CatClickCounter);
+    const { getByRole, getByText, rerender } = render(CatClickCounter, {
+      props: {
+        breedId: "",
+      },
+    });
+
+    await rerender({ breedId: "foo" });
 
     await flushPromises();
     await fireEvent.click(getByRole("button"));

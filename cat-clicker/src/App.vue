@@ -2,7 +2,7 @@
   <progress v-if="loading" />
   <template v-else>
     <breeds :breeds="breeds" @click="onSelectBreed" />
-    <span>{{ selectedBreed.name }}</span>
+    <cat-click-counter :breed-id="selectedBreed.id" />
   </template>
 </template>
 
@@ -10,10 +10,11 @@
 import { computed, defineComponent, ref } from "vue";
 import axios from "axios";
 import Breeds, { Breed } from "@/components/breeds/Breeds.vue";
+import CatClickCounter from "@/components/cat-click-counter/CatClickCounter.vue";
 
 export default defineComponent({
   name: "App",
-  components: { Breeds },
+  components: { CatClickCounter, Breeds },
   setup() {
     const loading = ref(true);
     const selectedBreed = ref<Breed>({
