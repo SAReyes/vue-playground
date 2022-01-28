@@ -1,66 +1,41 @@
 <template>
   <progress v-if="loading" />
-  <template v-else>
-    <cat :cat="cat" @click="onCatClick" />
-    <counter :counter="catClickCounter" />
-  </template>
+  <div v-show="!loading" class="app">
+    <cat-click-counter @load="isFirstCatLoading = false" />
+    <cat-click-counter @load="isSecondCatLoading = false" />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
-import Cat, { CatProps } from "@/components/cat/Cat.vue";
-import Counter from "@/components/counter/Counter.vue";
-import axios from "axios";
+import { computed, defineComponent, ref } from "vue";
+import CatClickCounter from "@/components/cat-click-counter/CatClickCounter.vue";
 
 export default defineComponent({
   name: "App",
-  components: { Counter, Cat },
+  components: { CatClickCounter },
   setup() {
-    const loading = ref(true);
+    const isFirstCatLoading = ref(true);
+    const isSecondCatLoading = ref(true);
 
-    const cat = reactive<CatProps>({
-      src: "",
-      name: "",
-    });
-
-    axios
-      .get("https://api.thecatapi.com/v1/images/search", {
-        params: {
-          has_breeds: 1,
-          size: "small",
-        },
-        headers: {
-          "x-api-key": process.env.VUE_APP_CAT_API_KEY,
-        },
-      })
-      .then(({ data }) => {
-        if (!data.length) {
-          return [];
-        }
-
-        const { url, breeds } = data[0];
-
-        cat.src = url;
-        cat.name = breeds.length ? breeds.name : "Unknown";
-
-        loading.value = false;
-      });
-
-    const catClickCounter = ref(0);
-
-    const onCatClick = () => {
-      catClickCounter.value = catClickCounter.value + 1;
-    };
+    const loading = computed(
+      () => isFirstCatLoading.value && isSecondCatLoading
+    );
 
     return {
       loading,
-      cat,
-      onCatClick,
-      catClickCounter,
+      isFirstCatLoading,
+      isSecondCatLoading,
     };
   },
 });
 </script>
+<style lang="scss" scoped>
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: rem(32);
+}
+</style>
 
 <style lang="scss">
 html,
@@ -80,6 +55,5 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
-  gap: rem(16);
 }
 </style>

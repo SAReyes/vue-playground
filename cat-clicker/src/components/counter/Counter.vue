@@ -13,9 +13,3 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-span {
-  color: #2c3e50;
-  font-size: rem(36);
-}
-</style>
