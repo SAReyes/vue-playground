@@ -6,7 +6,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-interface CatProps {
+export interface CatProps {
   name: string;
   src: string;
 }
@@ -24,5 +24,9 @@ button {
   padding: 0;
   border: none;
   cursor: pointer;
+}
+
+img {
+  max-width: rem(400);
 }
 </style>

@@ -1,17 +1,51 @@
 <template>
-  <cat :cat="aCat" @click="onCatClick" />
-  <counter :counter="catClickCounter" />
+  <progress v-if="loading" />
+  <template v-else>
+    <cat :cat="cat" @click="onCatClick" />
+    <counter :counter="catClickCounter" />
+  </template>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import Cat from "@/components/cat/Cat.vue";
+import { defineComponent, reactive, ref } from "vue";
+import Cat, { CatProps } from "@/components/cat/Cat.vue";
 import Counter from "@/components/counter/Counter.vue";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
   components: { Counter, Cat },
   setup() {
+    const loading = ref(true);
+
+    const cat = reactive<CatProps>({
+      src: "",
+      name: "",
+    });
+
+    axios
+      .get("https://api.thecatapi.com/v1/images/search", {
+        params: {
+          has_breeds: 1,
+          size: "small",
+        },
+        headers: {
+          "x-api-key": process.env.VUE_APP_CAT_API_KEY,
+        },
+      })
+      .then(({ data }) => {
+        if (!data.length) {
+          return [];
+        }
+
+        const { url, breeds } = data[0];
+
+        cat.src = url;
+        cat.name = breeds.length ? breeds.name : "Unknown";
+
+        loading.value = false;
+      });
+
     const catClickCounter = ref(0);
 
     const onCatClick = () => {
@@ -19,10 +53,8 @@ export default defineComponent({
     };
 
     return {
-      aCat: {
-        src: "https://cdn2.thecatapi.com/images/76j.jpg",
-        name: "John Doe",
-      },
+      loading,
+      cat,
       onCatClick,
       catClickCounter,
     };
