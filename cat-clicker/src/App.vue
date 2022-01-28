@@ -1,10 +1,10 @@
 <template>
-  <cat :cat="aCat" />
-  <counter counter="10" />
+  <cat :cat="aCat" @click="onCatClick" />
+  <counter :counter="catClickCounter" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import Cat from "@/components/cat/Cat.vue";
 import Counter from "@/components/counter/Counter.vue";
 
@@ -12,11 +12,19 @@ export default defineComponent({
   name: "App",
   components: { Counter, Cat },
   setup() {
+    const catClickCounter = ref(0);
+
+    const onCatClick = () => {
+      catClickCounter.value = catClickCounter.value + 1;
+    };
+
     return {
       aCat: {
         src: "https://cdn2.thecatapi.com/images/76j.jpg",
         name: "John Doe",
       },
+      onCatClick,
+      catClickCounter,
     };
   },
 });
