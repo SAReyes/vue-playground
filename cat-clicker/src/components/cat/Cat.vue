@@ -1,5 +1,7 @@
 <template>
-  <img :src="cat.src" :alt="cat.name" />
+  <button type="button">
+    <img :src="cat.src" :alt="cat.name" />
+  </button>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
@@ -17,3 +19,10 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+button {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+</style>
