@@ -1,6 +1,6 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="box">My box</div>
 </template>
 
 <script lang="ts">
@@ -14,6 +14,12 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+.box {
+  background-color: red;
+  height: rem(100);
+}
+</style>
 
 <style lang="scss">
 #app {
@@ -21,7 +27,6 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-size: $font-size;
 }
 </style>
