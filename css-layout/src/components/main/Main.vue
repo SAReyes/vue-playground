@@ -45,7 +45,7 @@ export default defineComponent({
   $title-height: rem(160);
 
   position: relative;
-  padding: $spacing-s $spacing-m;
+  padding: $spacing-m $spacing-m;
 
   &__gradient {
     position: absolute;
