@@ -15,6 +15,7 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 main {
-  border: 4px dashed darkgoldenrod;
+  background-color: $c-background-dark;
+  color: $c-text-dark;
 }
 </style>
