@@ -18,7 +18,6 @@ export default defineComponent({});
 
   background-color: $c-background-light;
   color: $c-text-light;
-  border-bottom: rem(5) solid $c-primary-accent;
 
   padding: $spacing-s $spacing-m;
 
