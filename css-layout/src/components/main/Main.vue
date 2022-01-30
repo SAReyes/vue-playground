@@ -2,7 +2,9 @@
   <main class="main">
     <div class="main__gradient" />
     <h1 class="main__title">Nice pictures</h1>
-    <cat v-for="cat in cats" :key="cat.image" :cat="cat" />
+    <div class="main__cats">
+      <cat v-for="cat in cats" :key="cat.image" :cat="cat" />
+    </div>
   </main>
 </template>
 <script lang="ts">
@@ -62,6 +64,9 @@ export default defineComponent({
   &__title {
     height: $title-height;
     color: $c-text-dark;
+  }
+
+  &__cats {
   }
 }
 </style>
