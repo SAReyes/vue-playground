@@ -30,10 +30,11 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .cat {
-  margin-top: rem(8);
   width: rem(300);
   border-radius: rem(4);
   box-shadow: 0 1px 1px 0 rgb(66 66 66 / 8%), 0 1px 3px 1px rgb(66 66 66 / 16%);
+  display: flex;
+  flex-direction: column;
 
   &__image {
     object-fit: cover;
@@ -45,7 +46,10 @@ export default defineComponent({
     padding: $spacing-s;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
     gap: $spacing-s;
+    flex: 1;
   }
 
   &__button-container {

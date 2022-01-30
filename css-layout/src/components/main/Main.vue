@@ -20,7 +20,7 @@ export default defineComponent({
     axios
       .get("/images/search", {
         params: {
-          limit: 10,
+          limit: 20,
           size: "full",
           mime_types: "gif",
         },
@@ -67,6 +67,10 @@ export default defineComponent({
   }
 
   &__cats {
+    display: flex;
+    gap: $spacing-m;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 </style>
