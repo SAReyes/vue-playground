@@ -3,11 +3,15 @@
     <img class="cat__image" :src="cat.image" :alt="cat.description" />
     <div class="cat__description-box">
       <span>{{ cat.description }}</span>
+      <div class="cat__button-container">
+        <Button>go</Button>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import Button from "@/components/button/Button.vue";
 
 export interface CatProps {
   image: string;
@@ -15,6 +19,7 @@ export interface CatProps {
 }
 
 export default defineComponent({
+  components: { Button },
   props: {
     cat: {
       type: Object as PropType<CatProps>,
@@ -41,6 +46,11 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: $spacing-s;
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>
