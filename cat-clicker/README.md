@@ -4,6 +4,7 @@
 ```
 npm install
 ```
+Provide a valid api key to connect to [https://thecatpapi.com](https://thecatapi.com) on the .env file
 
 ### Compiles and hot-reloads for development
 ```
